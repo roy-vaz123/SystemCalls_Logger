@@ -20,7 +20,7 @@ This project taught me:
 - How to use `ptrace` to intercept syscall entry and exit points
 - That not all signals from `waitpid` are syscall-related; I had to filter only syscall stops using `PTRACE_O_TRACESYSGOOD` and bit masking
 - System calls can fail for many reasons (e.g., `ENOENT`), and return values must be interpreted carefully
-
+- During testing iv'e discovered `strace`. this nice tool that actually does what the project does, so i had a way to validate my results
 
 ## Types of Syscalls Observed
 

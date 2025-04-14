@@ -1,0 +1,5 @@
+/*.log
+*.o
+*.out
+*.pyc
+/log_analysis/venv

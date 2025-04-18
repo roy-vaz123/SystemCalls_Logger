@@ -1,10 +1,14 @@
 #include "Tracer.h"
 #include <iostream>
 #include <fstream>
+#include <csignal>// To log if exit in the middle
 #include <nlohmann/json.hpp> // For safer cleaner conversion to jsson format (works best with the python presentation)
 
 #define OUTPUT_JSON_PATH "/tmp/syscalls_log.json" // Write to temp for now, always safe
 
+void handleSigint(int signum) {
+    std::cout << "\nCaught SIGINT (Ctrl+C). Saving log up...\n";
+}
 
 // Save the logged syscalls to a json file at path
 void dumpToJson(const std::vector<SyscallInfo>& log, const std::string& path) {
@@ -23,6 +27,9 @@ void dumpToJson(const std::vector<SyscallInfo>& log, const std::string& path) {
 }
 
 int main(int argc, char* argv[]) {
+    
+    // Register signal handler
+    signal(SIGINT, handleSigint);
     if (argc < 2) { // Not enough arguments calling the tracer (no program to trace)
         std::cerr << "Usage: " << argv[0] << " <program-to-trace> [args...]" << std::endl;
         return 1;
